@@ -79,7 +79,7 @@ sudo apt install ros-noetic-urdf \
 
 ### 3.1 概述
 
-提供与 C++相同功能的[Python 运动算法开发接口](https://github.com/limxdynamics/pointfoot-sdk-lowlevel/tree/main/python3)，使得不熟悉 C++编程语言的开发者能够使用 Python 进行运动控制算法的开发。Python 语言易于学习，具有简洁清晰的语法和丰富的第三方库，使开发者能够更快速地上手并迅速实现算法。通过 Python 接口，开发者可以利用 Python 的动态特性进行快速原型设计和实验验证，加速算法的迭代和优化过程。同时，Python 的跨平台性和强大的生态系统支持，使得运动算法能够更广泛地应用于不同平台和环境。此外，RL（强化学习）模型的快速部署到仿真和真机环境中也得益于 Python 的灵活性，开发者可以使用 Python 轻松地将 RL 模型集成到各种仿真平台和真实硬件中，实现快速迭代和验证算法的性能。
+提供与 C++相同功能的[Python 运动算法开发接口](https://github.com/limxdynamics/pointfoot-sdk-lowlevel/tree/master/python3)，使得不熟悉 C++编程语言的开发者能够使用 Python 进行运动控制算法的开发。Python 语言易于学习，具有简洁清晰的语法和丰富的第三方库，使开发者能够更快速地上手并迅速实现算法。通过 Python 接口，开发者可以利用 Python 的动态特性进行快速原型设计和实验验证，加速算法的迭代和优化过程。同时，Python 的跨平台性和强大的生态系统支持，使得运动算法能够更广泛地应用于不同平台和环境。此外，RL（强化学习）模型的快速部署到仿真和真机环境中也得益于 Python 的灵活性，开发者可以使用 Python 轻松地将 RL 模型集成到各种仿真平台和真实硬件中，实现快速迭代和验证算法的性能。
 
 ### 3.2 环境配置
 
@@ -111,4 +111,4 @@ sudo apt install ros-noetic-urdf \
 
 ### 3.3 参考例程
 
-Python 接口参考例程: https://github.com/limxdynamics/pointfoot-sdk-lowlevel/blob/main/python3/amd64/example.py
+Python 接口参考例程: https://github.com/limxdynamics/pointfoot-sdk-lowlevel/blob/master/python3/amd64/example.py
