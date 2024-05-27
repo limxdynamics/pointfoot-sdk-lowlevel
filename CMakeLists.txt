@@ -5,59 +5,87 @@ project(pointfoot_sdk_lowlevel)
 set(CMAKE_BUILD_TYPE "Release")
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
-
-if (DEFINED CATKIN_DEVEL_PREFIX)
-  # In ROS compilation environment
-  message("Currently in ROS compilation environment")
-  
-  find_package(catkin REQUIRED COMPONENTS 
-    roscpp
-  )
-
-  catkin_package(
-    INCLUDE_DIRS include
-    CATKIN_DEPENDS
+if(DEFINED ENV{ROS_DISTRO})
+  if($ENV{ROS_VERSION} EQUAL 1)
+    # In ROS compilation environment
+    message("Currently in ROS1 compilation environment")
+    
+    find_package(catkin REQUIRED COMPONENTS 
       roscpp
-  )
-
-  include_directories(${catkin_INCLUDE_DIRS})
-
-  add_custom_target(pointfoot_sdk_lowlevel_include_target ALL
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/include/limxsdk ${CATKIN_DEVEL_PREFIX}/include
-  )
-
-  if (${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
-    set(LIB_PATH ${PROJECT_SOURCE_DIR}/lib/aarch64)
-    set(PYLIB_PATH ${PROJECT_SOURCE_DIR}/python3/aarch64/limxsdk)
-    add_custom_target(pointfoot_sdk_lowlevel_target ALL
-      COMMAND ${CMAKE_COMMAND} -E copy_if_different ${LIB_PATH}/libpointfoot_sdk_lowlevel.so ${CATKIN_DEVEL_PREFIX}/lib
     )
-  elseif (${CMAKE_SYSTEM_PROCESSOR} MATCHES "x86_64")
-    set(LIB_PATH ${PROJECT_SOURCE_DIR}/lib/amd64)
-    set(PYLIB_PATH ${PROJECT_SOURCE_DIR}/python3/amd64/limxsdk)
-    add_custom_target(pointfoot_sdk_lowlevel_target ALL
-      COMMAND ${CMAKE_COMMAND} -E copy_if_different ${LIB_PATH}/libpointfoot_sdk_lowlevel.so ${CATKIN_DEVEL_PREFIX}/lib
-    )
-  elseif (WIN32)
-    set(LIB_PATH ${PROJECT_SOURCE_DIR}/lib/win)
-    set(PYLIB_PATH ${PROJECT_SOURCE_DIR}/python3/win/limxsdk)
-    add_custom_target(pointfoot_sdk_lowlevel_target ALL
-      COMMAND ${CMAKE_COMMAND} -E copy_if_different ${LIB_PATH}/pointfoot_sdk_lowlevel.dll ${CATKIN_DEVEL_PREFIX}/lib
-      COMMAND ${CMAKE_COMMAND} -E copy_if_different ${LIB_PATH}/pointfoot_sdk_lowlevel.lib ${CATKIN_DEVEL_PREFIX}/lib
-    )
-  else()
-    message(FATAL_ERROR "Unsupported architecture!")
-  endif()
 
-  link_directories( ${LIB_PATH} )
+    catkin_package(
+      INCLUDE_DIRS include
+      CATKIN_DEPENDS
+        roscpp
+    )
 
-  install(DIRECTORY include/ DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION})
+    include_directories(${catkin_INCLUDE_DIRS})
+
+    add_custom_target(pointfoot_sdk_lowlevel_include_target ALL
+      COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/include/limxsdk ${CATKIN_DEVEL_PREFIX}/include
+    )
+
+    if (${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
+      set(LIB_PATH ${PROJECT_SOURCE_DIR}/lib/aarch64)
+      set(PYLIB_PATH ${PROJECT_SOURCE_DIR}/python3/aarch64/limxsdk)
+      add_custom_target(pointfoot_sdk_lowlevel_target ALL
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different ${LIB_PATH}/libpointfoot_sdk_lowlevel.so ${CATKIN_DEVEL_PREFIX}/lib
+      )
+    elseif (${CMAKE_SYSTEM_PROCESSOR} MATCHES "x86_64")
+      set(LIB_PATH ${PROJECT_SOURCE_DIR}/lib/amd64)
+      set(PYLIB_PATH ${PROJECT_SOURCE_DIR}/python3/amd64/limxsdk)
+      add_custom_target(pointfoot_sdk_lowlevel_target ALL
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different ${LIB_PATH}/libpointfoot_sdk_lowlevel.so ${CATKIN_DEVEL_PREFIX}/lib
+      )
+    elseif (WIN32)
+      set(LIB_PATH ${PROJECT_SOURCE_DIR}/lib/win)
+      set(PYLIB_PATH ${PROJECT_SOURCE_DIR}/python3/win/limxsdk)
+      add_custom_target(pointfoot_sdk_lowlevel_target ALL
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different ${LIB_PATH}/pointfoot_sdk_lowlevel.dll ${CATKIN_DEVEL_PREFIX}/lib
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different ${LIB_PATH}/pointfoot_sdk_lowlevel.lib ${CATKIN_DEVEL_PREFIX}/lib
+      )
+    else()
+      message(FATAL_ERROR "Unsupported architecture!")
+    endif()
+
+    link_directories( ${LIB_PATH} )
+
+    install(DIRECTORY include/ DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION})
+    
+    # Install library files to build output
+    install(DIRECTORY ${LIB_PATH}/. DESTINATION ${CATKIN_GLOBAL_LIB_DESTINATION})
+
+    # Install python
+    install(DIRECTORY ${PYLIB_PATH} DESTINATION ${CATKIN_GLOBAL_PYTHON_DESTINATION})
   
-  # Install library files to build output
-  install(DIRECTORY ${LIB_PATH}/. DESTINATION ${CATKIN_GLOBAL_LIB_DESTINATION})
+  elseif($ENV{ROS_VERSION} EQUAL 2)
+    # In ROS2 compilation environment
+    message("Currently in ROS2 compilation environment")
 
-  # Install python
-  install(DIRECTORY ${PYLIB_PATH} DESTINATION ${CATKIN_GLOBAL_PYTHON_DESTINATION})
+    find_package(ament_cmake REQUIRED)
+
+    ament_export_include_directories(include)
+
+    if (${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
+      set(LIB_PATH ${PROJECT_SOURCE_DIR}/lib/aarch64)
+    elseif (${CMAKE_SYSTEM_PROCESSOR} MATCHES "x86_64")
+      set(LIB_PATH ${PROJECT_SOURCE_DIR}/lib/amd64)
+    elseif (WIN32)
+      set(LIB_PATH ${PROJECT_SOURCE_DIR}/lib/win)
+    else()
+      message(FATAL_ERROR "Unsupported architecture!")
+    endif()
+
+    link_directories( ${LIB_PATH} )
+
+    install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/)
+    
+    # Install library files to build output
+    install(DIRECTORY ${LIB_PATH}/. DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
+
+    ament_package()
+  endif()
 else()
   if (${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
     set(LIB_PATH ${PROJECT_SOURCE_DIR}/lib/aarch64)
