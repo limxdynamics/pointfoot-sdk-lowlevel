@@ -14,4 +14,3 @@ class RobotType(Enum):
     """
     PointFoot   = 1  # Robot with point foot design.
     Wheellegged = 2  # Robot with wheel-legged design.
-    Dualarm     = 3  # Robot with dualarm design.

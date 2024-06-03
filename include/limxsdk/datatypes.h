@@ -55,6 +55,13 @@ namespace limxsdk {
     : tau(motor_num, 0.0)
     , q(motor_num, 0.0)
     , dq(motor_num, 0.0) { }
+
+    void resize(int motor_num) {
+      tau.resize(motor_num, 0.0);
+      q.resize(motor_num, 0.0);
+      dq.resize(motor_num, 0.0);
+    }
+
     uint64_t stamp;             // Timestamp in nanoseconds, typically represents the time when this data was recorded or generated.
     std::vector<float> tau;     // Vector to store the current estimated output torque (in Newton meters)
     std::vector<float> q;       // Vector to store the current angles (in radians)
@@ -79,6 +86,16 @@ namespace limxsdk {
     , tau(motor_num, 0.0)
     , Kp(motor_num, 0.0)
     , Kd(motor_num, 0.0) { }
+
+    void resize(int motor_num) {
+      mode.resize(motor_num, 0.0);
+      q.resize(motor_num, 0.0);
+      dq.resize(motor_num, 0.0);
+      tau.resize(motor_num, 0.0);
+      Kp.resize(motor_num, 0.0);
+      Kd.resize(motor_num, 0.0);
+    }
+
     uint64_t stamp;             // Timestamp in nanoseconds, typically represents the time when this data was recorded or generated.
     std::vector<uint8_t> mode;  // The desired working mode of the robot.
     std::vector<float> q;       // Vector storing the desired angles (in radians).

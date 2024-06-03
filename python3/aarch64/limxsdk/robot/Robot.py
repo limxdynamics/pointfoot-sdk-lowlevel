@@ -35,8 +35,6 @@ class Robot(object):
             self.robot = robot.RobotNative("PointFoot")
         elif robot_type == robot.RobotType.Wheellegged:
             self.robot = robot.RobotNative("Wheellegged")
-        elif robot_type == robot.RobotType.Dualarm:
-            self.robot = robot.RobotNative("Dualarm")
 
     def init(self, robot_ip: str = "127.0.0.1"):
         """
