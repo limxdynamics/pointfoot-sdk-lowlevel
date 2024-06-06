@@ -123,6 +123,6 @@ namespace limxsdk {
        */
       PointFoot();
   };
-};
+}
 
 #endif

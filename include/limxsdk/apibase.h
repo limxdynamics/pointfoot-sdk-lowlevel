@@ -135,6 +135,6 @@ namespace limxsdk {
       std::function<void(const SensorJoyConstPtr&)> sensor_joy_callback_{nullptr}; // Callback for handling joystick sensor inputs from the robot.
       std::function<void(const DiagnosticValueConstPtr&)> diagnostic_callback_{nullptr}; // Callback for handling diagnostic values from the robot.
   };
-};
+}
 
 #endif

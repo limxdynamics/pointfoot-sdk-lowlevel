@@ -151,6 +151,6 @@ namespace limxsdk {
   };
   typedef std::shared_ptr<DiagnosticValue> DiagnosticValuePtr;
   typedef std::shared_ptr<DiagnosticValue const> DiagnosticValueConstPtr;
-};
+}
 
 #endif
