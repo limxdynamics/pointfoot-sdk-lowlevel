@@ -128,6 +128,17 @@ namespace limxsdk {
        */
       virtual void subscribeDiagnosticValue(std::function<void(const DiagnosticValueConstPtr&)> cb);
 
+      /**
+       * @brief Set the robot light effect.
+       * 
+       * This method configures the robot light effect based on the provided effect parameter.
+       * The effect parameter should be an integer that specifies the desired robot light effect.
+       * 
+       * @param effect An integer representing the desired robot light effect.
+       * @return A boolean value indicating whether the robot light effect was successfully set.
+       */
+      virtual bool setRobotLightEffect(int effect);
+
     protected:
       std::function<void(const ImuDataConstPtr&)> imu_data_callback_{nullptr};  // Callback function for handling IMU data updates.
       std::function<void(const RobotStateConstPtr&)> robot_state_callback_{nullptr};  // Callback function for handling robot state updates.

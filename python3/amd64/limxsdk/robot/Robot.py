@@ -120,3 +120,25 @@ class Robot(object):
         @return: Subscription status.
         """
         return self.robot.subscribeDiagnosticValue(callback)
+
+    def setRobotLightEffect(self, effect: datatypes.LightEffect):
+        """
+        @brief Sets the robot's light effect.
+
+        This method configures the robot's light effect based on the provided effect parameter.
+        The `effect` parameter should be an instance of the `LightEffect` enum, which provides 
+        predefined values for different light effects. The enum value is converted to its integer 
+        representation before being sent to the robot's API.
+
+        @param effect: An instance of the `LightEffect` enum representing the desired robot light effect. 
+                      The method converts this enum value to an integer to be compatible with the underlying 
+                      robot API. Refer to the `LightEffect` enum for valid values. For example:
+                      - `datatypes.LightEffect.STATIC_RED` corresponds to a static red light.
+                      - `datatypes.LightEffect.FAST_FLASH_BLUE` corresponds to a fast-flashing blue light.
+
+        @return: `True` if the light effect was successfully set, `False` otherwise. The return value indicates
+                whether the operation was successful.
+        """
+        # Convert the enum to its integer value and call the robot's method
+        return self.robot.setRobotLightEffect(effect.value)
+
