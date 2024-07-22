@@ -42,6 +42,16 @@ public:
           limit[3], limit[4], limit[5];
     }
 
+    // Subscribing to diagnostic values for calibration state
+    pf_->subscribeDiagnosticValue([&](const limxsdk::DiagnosticValueConstPtr& msg) {
+      // Check if the diagnostic message pertains to calibration
+      if (msg->name == "calibration") {
+        if (msg->code != 0){
+          abort();
+        }
+      }
+    });
+    
     robotstate_on_ = false; // Initialize robot state flag
   }
 
