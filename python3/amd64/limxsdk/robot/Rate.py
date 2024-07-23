@@ -4,37 +4,27 @@
 © [2023] LimX Dynamics Technology Co., Ltd. All rights reserved.
 """
 
-import time
+import limxsdk.robot as robot
 
-class Rate:
-    def __init__(self, frequency):
+class Rate(object):
+    def __init__(self, frequency: float):
         """
         Constructor for the Rate class.
-        
+
         Args:
             frequency (float): The frequency in Hz (cycles per second).
         """
-        self.frequency = frequency
-        self.period = 1.0 / frequency  # Calculate the time period for one cycle
-        self.start_time = time.time()  # Get the current time
+        self.native = robot.RateNative(frequency)
 
     def sleep(self):
         """
-        Sleeps for the appropriate time to maintain the desired frequency.
+        Sleeps for any leftover time in a cycle. Calculated from the last time sleep, reset, or the constructor was called.
+        True if the desired rate was met for the cycle, false otherwise.
         """
-        end_time = time.time()  # Get the current time
-        elapsed = end_time - self.start_time  # Calculate time elapsed since last sleep
-
-        # Check if the elapsed time is less than the desired period
-        # If so, sleep for the remaining time to achieve the desired frequency
-        if elapsed < self.period:
-            remaining_time = self.period - elapsed
-            time.sleep(remaining_time)
-
-        self.start_time = time.time()  # Update the start time for the next cycle
+        return self.native.sleep()
 
     def reset(self):
         """
         Reset the start time.
         """
-        self.start_time = time.time()  # Reset the start time to the current time
+        self.native.reset()
