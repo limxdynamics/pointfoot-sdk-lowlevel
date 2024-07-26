@@ -19,6 +19,16 @@ public:
    */
   void init()
   {
+    // Subscribing to diagnostic values for calibration state
+    pf_->subscribeDiagnosticValue([&](const limxsdk::DiagnosticValueConstPtr& msg) {
+      // Check if the diagnostic message pertains to calibration
+      if (msg->name == "calibration") {
+        if (msg->code != 0){
+          abort();
+        }
+      }
+    });
+    
     // Set default values for gains, target positions, velocities, and torques
     kp = {60, 60, 60, 60, 60, 60};
     kd = {3, 3, 3, 3, 3, 3};
@@ -41,17 +51,6 @@ public:
       joint_limit_ << limit[0], limit[1], limit[2],
           limit[3], limit[4], limit[5];
     }
-
-    // Subscribing to diagnostic values for calibration state
-    pf_->subscribeDiagnosticValue([&](const limxsdk::DiagnosticValueConstPtr& msg) {
-      // Check if the diagnostic message pertains to calibration
-      if (msg->name == "calibration") {
-        if (msg->code != 0){
-          abort();
-        }
-      }
-    });
-    
     robotstate_on_ = false; // Initialize robot state flag
   }
 

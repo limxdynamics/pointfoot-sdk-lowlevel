@@ -19,6 +19,16 @@ public:
    */
   void init()
   {
+    // Subscribing to diagnostic values for calibration state
+    pf_->subscribeDiagnosticValue([&](const limxsdk::DiagnosticValueConstPtr& msg) {
+      // Check if the diagnostic message pertains to calibration
+      if (msg->name == "calibration") {
+        if (msg->code != 0){
+          abort();
+        }
+      }
+    });
+
     std::vector<float> offset; // Vector to store joint offsets
     std::vector<float> limit;  // Vector to store joint limits
 
@@ -34,16 +44,6 @@ public:
       joint_limit_ << limit[0], limit[1], limit[2],
           limit[3], limit[4], limit[5];
     }
-
-    // Subscribing to diagnostic values for calibration state
-    pf_->subscribeDiagnosticValue([&](const limxsdk::DiagnosticValueConstPtr& msg) {
-      // Check if the diagnostic message pertains to calibration
-      if (msg->name == "calibration") {
-        if (msg->code != 0){
-          abort();
-        }
-      }
-    });
   }
 
   /**
