@@ -66,9 +66,7 @@ if __name__ == '__main__':
     print("Set light effect to FAST_FLASH_YELLOW: " + str(robot.setRobotLightEffect(datatypes.LightEffect.FAST_FLASH_YELLOW)))
     time.sleep(5)
 
-    # Get joint offset, joint limit, and motor number information
-    joint_offset = robot.getJointOffset()
-    joint_limit = robot.getJointLimit()
+    # Get motor number information
     motor_number = robot.getMotorNumber()
 
     # Create an instance of RobotReceiver to handle callbacks

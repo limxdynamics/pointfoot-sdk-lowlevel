@@ -35,22 +35,6 @@ public:
     targetPos = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
     targetVel = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
     targetTorque = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-
-    std::vector<float> offset; // Vector to store joint offsets
-    std::vector<float> limit;  // Vector to store joint limits
-
-    // Retrieve joint offsets from the robot
-    if (pf_->getJointOffset(offset))
-    {
-      joint_offset_ << offset[0], offset[1], offset[2],
-          offset[3], offset[4], offset[5];
-    }
-    // Retrieve joint limits from the robot
-    if (pf_->getJointLimit(limit))
-    {
-      joint_limit_ << limit[0], limit[1], limit[2],
-          limit[3], limit[4], limit[5];
-    }
     robotstate_on_ = false; // Initialize robot state flag
   }
 
@@ -83,7 +67,7 @@ public:
         // Calculate the desired joint positions using linear interpolation
         for (size_t i = 0; i < getNumofJoint(); ++i)
         {
-          jointPos[i] = (1 - r) * (init_pos_[i] + joint_limit_[i] - joint_offset_[i]) + r * targetPos[i];
+          jointPos[i] = (1 - r) * init_pos_[i] + r * targetPos[i];
         }
 
         // Control the joints using PID controllers

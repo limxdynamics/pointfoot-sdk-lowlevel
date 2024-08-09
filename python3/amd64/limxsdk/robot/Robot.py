@@ -83,24 +83,6 @@ class Robot(object):
         """
         return self.robot.publishRobotCmd(cmd)
 
-    def getJointOffset(self, timeout: float = -1.0):
-        """
-        @brief Gets the joint offset of the robot.
-
-        @param timeout: Timeout for getting joint offset (-1 for infinite waiting time).
-        @return: Joint offset.
-        """
-        return self.robot.getJointOffset(timeout)
-
-    def getJointLimit(self, timeout: float = -1.0):
-        """
-        @brief Gets the joint limit of the robot.
-
-        @param timeout: Timeout for getting joint limit (-1 for infinite waiting time).
-        @return: Joint limit.
-        """
-        return self.robot.getJointLimit(timeout)
-
     def subscribeSensorJoy(self, callback: Callable[[datatypes.SensorJoy], Any]):
         """
         @brief Subscribes to receive sensor joy updates.

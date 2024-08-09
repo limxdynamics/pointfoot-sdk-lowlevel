@@ -96,9 +96,6 @@ protected:
   double time_action_ = 3.0;   // Duration of an action
   int running_iter_{1};        // Iteration count
 
-  Eigen::VectorXd joint_offset_; // Vector containing joint offsets
-  Eigen::VectorXd joint_limit_;  // Vector containing joint limits
-
 private:
   int joint_num_{6};           // Number of joints in the robot
 };

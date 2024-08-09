@@ -28,22 +28,6 @@ public:
         }
       }
     });
-
-    std::vector<float> offset; // Vector to store joint offsets
-    std::vector<float> limit;  // Vector to store joint limits
-
-    // Retrieve joint offsets from the robot
-    if (pf_->getJointOffset(offset))
-    {
-      joint_offset_ << offset[0], offset[1], offset[2],
-          offset[3], offset[4], offset[5];
-    }
-    // Retrieve joint limits from the robot
-    if (pf_->getJointLimit(limit))
-    {
-      joint_limit_ << limit[0], limit[1], limit[2],
-          limit[3], limit[4], limit[5];
-    }
   }
 
   /**
@@ -73,7 +57,7 @@ public:
         r = std::min(std::max(double(running_iter_) / 2000.0, 0.0), 1.0);
 
         // Calculate the desired joint position using linear interpolation
-        jointPos = (1 - r) * (joint_init_pos_ + joint_limit_[joint_id] - joint_offset_[joint_id]) + r * joint_targetPos;
+        jointPos = (1 - r) * joint_init_pos_ + r * joint_targetPos;
 
         // Control the joint using a PID controller
         singleJointController(joint_id, joint_kp, joint_kd, jointPos, joint_targetVel, joint_targetTorque);

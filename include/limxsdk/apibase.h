@@ -86,22 +86,6 @@ namespace limxsdk {
       virtual bool publishImuDataForSim(const ImuData& imu);
 
       /**
-       * @brief Virtual method to get the joint offset of the robot.
-       * @param joint_offset A vector of floats where the joint offsets will be stored.
-       * @param timeout Timeout value in seconds for getting the joint offset. Use -1 for infinite waiting time.
-       * @return True if the joint offset was successfully retrieved, otherwise false.
-       */
-      virtual bool getJointOffset(std::vector<float>& joint_offset, float timeout = -1 /*seconds*/);
-
-      /**
-       * @brief Virtual method to get the joint limit of the robot.
-       * @param joint_limit A vector of floats where the joint limits will be stored.
-       * @param timeout Timeout value in seconds for getting the joint limit. Use -1 for infinite waiting time.
-       * @return True if the joint limit was successfully retrieved, otherwise false.
-       */
-      virtual bool getJointLimit(std::vector<float>& joint_limit, float timeout = -1 /*seconds*/);
-
-      /**
        * @brief Virtual method to subscribe to sensor inputs related to a joystick from the robot.
        * @param cb The callback function to be invoked when sensor input from a joystick is received from the robot.
        */

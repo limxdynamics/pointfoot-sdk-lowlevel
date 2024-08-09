@@ -19,24 +19,6 @@ PFControllerBase::PFControllerBase()
   robot_cmd_ = limxsdk::RobotCmd(pf_->getMotorNumber());
   robot_state_ = limxsdk::RobotState(pf_->getMotorNumber());
 
-  // Resize joint offset and limit vectors
-  joint_offset_.resize(joint_num_);
-  joint_limit_.resize(joint_num_);
-
-  // Retrieve joint offset and limit from the robot
-  std::vector<float> offset;
-  std::vector<float> limit;
-  if (pf_->getJointOffset(offset))
-  {
-    joint_offset_ << offset[0], offset[1], offset[2],
-        offset[3], offset[4], offset[5];
-  }
-  if (pf_->getJointLimit(limit))
-  {
-    joint_limit_ << limit[0], limit[1], limit[2],
-        limit[3], limit[4], limit[5];
-  }
-
   // Subscribe to robot state updates
   pf_->subscribeRobotState([&](const limxsdk::RobotStateConstPtr &msg)
                            {
@@ -64,7 +46,7 @@ void PFControllerBase::singleJointController(int jointId, double kp, double kd,
 {
   robot_cmd_.Kp[jointId] = kp;
   robot_cmd_.Kd[jointId] = kd;
-  robot_cmd_.q[jointId] = targetPos - joint_limit_[jointId] + joint_offset_[jointId];
+  robot_cmd_.q[jointId] = targetPos;
   robot_cmd_.dq[jointId] = targetVel;
   robot_cmd_.tau[jointId] = targetTorque;
   pf_->publishRobotCmd(robot_cmd_);
@@ -79,7 +61,7 @@ void PFControllerBase::groupJointController(std::vector<float> &kp, std::vector<
   {
     robot_cmd_.Kp[i] = kp[i];
     robot_cmd_.Kd[i] = kd[i];
-    robot_cmd_.q[i] = targetPos[i] - joint_limit_[i] + joint_offset_[i];
+    robot_cmd_.q[i] = targetPos[i];
     robot_cmd_.dq[i] = targetVel[i];
     robot_cmd_.tau[i] = targetTorque[i];
   }
