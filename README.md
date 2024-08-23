@@ -81,32 +81,26 @@ sudo apt install ros-noetic-urdf \
 
 提供与 C++相同功能的[Python 运动算法开发接口](https://github.com/limxdynamics/pointfoot-sdk-lowlevel/tree/master/python3)，使得不熟悉 C++编程语言的开发者能够使用 Python 进行运动控制算法的开发。Python 语言易于学习，具有简洁清晰的语法和丰富的第三方库，使开发者能够更快速地上手并迅速实现算法。通过 Python 接口，开发者可以利用 Python 的动态特性进行快速原型设计和实验验证，加速算法的迭代和优化过程。同时，Python 的跨平台性和强大的生态系统支持，使得运动算法能够更广泛地应用于不同平台和环境。此外，RL（强化学习）模型的快速部署到仿真和真机环境中也得益于 Python 的灵活性，开发者可以使用 Python 轻松地将 RL 模型集成到各种仿真平台和真实硬件中，实现快速迭代和验证算法的性能。
 
-### 3.2 环境配置
+### 3.2 安装运动控制开发库
 
-通过设置 PYTHONPATH 环境变量，可以将 Python 的运动控制开发库配置到 Python 环境中。这样做可以让 Python 解释器在搜索模块时包含指定的路径，确保可以找到并使用运动控制库中的模块和功能。
+请根据操作系统选择相应的命令：
 
-- Linux x86_64 环境
-
-  请确保将"/your/actual/path/pointfoot-sdk-lowlevel"替换为实际路径，这样 Python 解释器才能正确地找到并使用运动控制开发库中的模块和功能。
+- Linux x86_64 平台
 
   ```Bash
-  export PYTHONPATH="/your/actual/path/pointfoot-sdk-lowlevel/python3/amd64:$PYTHONPATH"
+  pip install python3/amd64/limxsdk-*-py3-none-any.whl
   ```
 
-- Linux aarch64 环境
-
-  请确保将"/your/actual/path/pointfoot-sdk-lowlevel"替换为实际路径，这样 Python 解释器才能正确地找到并使用运动控制开发库中的模块和功能。
+- Linux aarch64 平台
 
   ```Bash
-  export PYTHONPATH="/your/actual/path/pointfoot-sdk-lowlevel/python3/aarch64:$PYTHONPATH"
+  pip install python3/aarch64/limxsdk-*-py3-none-any.whl
   ```
 
-- Windows 环境
+- Windows  平台
 
-  请确保将"D:\your\actual\path\pointfoot-sdk-lowlevel"替换为实际路径，这样 Python 解释器才能正确地找到并使用运动控制开发库中的模块和功能。
-
-  ```bash
-  set PYTHONPATH=D:\your\actual\path\pointfoot-sdk-lowlevel\python3\win;%PYTHONPATH%
+  ```Bash
+  pip install python3/win/limxsdk-*-py3-none-any.whl
   ```
 
 ### 3.3 参考例程
