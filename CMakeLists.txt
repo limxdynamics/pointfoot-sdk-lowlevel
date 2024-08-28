@@ -28,13 +28,11 @@ if(DEFINED ENV{ROS_DISTRO})
 
     if (${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
       set(LIB_PATH ${PROJECT_SOURCE_DIR}/lib/aarch64)
-      set(PYLIB_PATH ${PROJECT_SOURCE_DIR}/python3/aarch64/limxsdk)
       add_custom_target(pointfoot_sdk_lowlevel_target ALL
         COMMAND ${CMAKE_COMMAND} -E copy_if_different ${LIB_PATH}/libpointfoot_sdk_lowlevel.so ${CATKIN_DEVEL_PREFIX}/lib
       )
     elseif (${CMAKE_SYSTEM_PROCESSOR} MATCHES "x86_64")
       set(LIB_PATH ${PROJECT_SOURCE_DIR}/lib/amd64)
-      set(PYLIB_PATH ${PROJECT_SOURCE_DIR}/python3/amd64/limxsdk)
       add_custom_target(pointfoot_sdk_lowlevel_target ALL
         COMMAND ${CMAKE_COMMAND} -E copy_if_different ${LIB_PATH}/libpointfoot_sdk_lowlevel.so ${CATKIN_DEVEL_PREFIX}/lib
       )
@@ -45,7 +43,6 @@ if(DEFINED ENV{ROS_DISTRO})
       )
     elseif (WIN32)
       set(LIB_PATH ${PROJECT_SOURCE_DIR}/lib/win)
-      set(PYLIB_PATH ${PROJECT_SOURCE_DIR}/python3/win/limxsdk)
       add_custom_target(pointfoot_sdk_lowlevel_target ALL
         COMMAND ${CMAKE_COMMAND} -E copy_if_different ${LIB_PATH}/pointfoot_sdk_lowlevel.dll ${CATKIN_DEVEL_PREFIX}/lib
         COMMAND ${CMAKE_COMMAND} -E copy_if_different ${LIB_PATH}/pointfoot_sdk_lowlevel.lib ${CATKIN_DEVEL_PREFIX}/lib
@@ -60,10 +57,6 @@ if(DEFINED ENV{ROS_DISTRO})
     
     # Install library files to build output
     install(DIRECTORY ${LIB_PATH}/. DESTINATION ${CATKIN_GLOBAL_LIB_DESTINATION})
-
-    # Install python
-    install(DIRECTORY ${PYLIB_PATH} DESTINATION ${CATKIN_GLOBAL_PYTHON_DESTINATION})
-  
   elseif($ENV{ROS_VERSION} EQUAL 2)
     # In ROS2 compilation environment
     message("Currently in ROS2 compilation environment")
