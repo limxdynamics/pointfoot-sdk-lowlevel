@@ -57,6 +57,7 @@ if(DEFINED ENV{ROS_DISTRO})
     
     # Install library files to build output
     install(DIRECTORY ${LIB_PATH}/. DESTINATION ${CATKIN_GLOBAL_LIB_DESTINATION})
+  
   elseif($ENV{ROS_VERSION} EQUAL 2)
     # In ROS2 compilation environment
     message("Currently in ROS2 compilation environment")
