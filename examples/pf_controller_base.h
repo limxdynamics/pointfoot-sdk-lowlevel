@@ -74,13 +74,6 @@ protected:
    */
   void damping();
 
-  /**
-   * @brief Function to get the number of joints in the robot.
-   *
-   * @return The number of joints.
-   */
-  int getNumofJoint() { return joint_num_; }
-
   const int32_t ROBOT_CMD_RATE = 1000; // Rate of robot command updates in milliseconds
 
   std::mutex mtx_;             // Mutex for thread safety
@@ -95,7 +88,4 @@ protected:
   double time_start_{0.0};     // Start time for an action
   double time_action_ = 3.0;   // Duration of an action
   int running_iter_{1};        // Iteration count
-
-private:
-  int joint_num_{6};           // Number of joints in the robot
 };

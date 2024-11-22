@@ -57,7 +57,7 @@ void PFControllerBase::groupJointController(std::vector<float> &kp, std::vector<
                                             std::vector<float> &targetPos, std::vector<float> &targetVel,
                                             std::vector<float> &targetTorque)
 {
-  for (size_t i = 0; i < getNumofJoint(); ++i)
+  for (size_t i = 0; i < pf_->getMotorNumber(); ++i)
   {
     robot_cmd_.Kp[i] = kp[i];
     robot_cmd_.Kd[i] = kd[i];
@@ -71,7 +71,7 @@ void PFControllerBase::groupJointController(std::vector<float> &kp, std::vector<
 // Function to publish zero torque commands
 void PFControllerBase::zeroTorque()
 {
-  for (size_t i = 0; i < getNumofJoint(); ++i)
+  for (size_t i = 0; i < pf_->getMotorNumber(); ++i)
   {
     robot_cmd_.Kp[i] = 0.0;
     robot_cmd_.Kd[i] = 0.0;
@@ -85,7 +85,7 @@ void PFControllerBase::zeroTorque()
 // Function to publish damping commands
 void PFControllerBase::damping()
 {
-  for (size_t i = 0; i < getNumofJoint(); ++i)
+  for (size_t i = 0; i < pf_->getMotorNumber(); ++i)
   {
     robot_cmd_.Kp[i] = 0.0;
     robot_cmd_.Kd[i] = 4.0; // Assuming 4 as the damping value

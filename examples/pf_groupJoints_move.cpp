@@ -30,11 +30,12 @@ public:
     });
     
     // Set default values for gains, target positions, velocities, and torques
-    kp = {60, 60, 60, 60, 60, 60};
-    kd = {3, 3, 3, 3, 3, 3};
-    targetPos = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-    targetVel = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-    targetTorque = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+    kp.resize(pf_->getMotorNumber(), 60.0);
+    kd.resize(pf_->getMotorNumber(), 3.0);
+    targetPos.resize(pf_->getMotorNumber(), 0.0);
+    targetVel.resize(pf_->getMotorNumber(), 0.0);
+    targetTorque.resize(pf_->getMotorNumber(), 0.0);
+    init_pos_.resize(pf_->getMotorNumber(), 0.0);
     robotstate_on_ = false; // Initialize robot state flag
   }
 
@@ -65,7 +66,7 @@ public:
         r = std::min(std::max(double(running_iter_) / 2000.0, 0.0), 1.0);
 
         // Calculate the desired joint positions using linear interpolation
-        for (size_t i = 0; i < getNumofJoint(); ++i)
+        for (size_t i = 0; i < pf_->getMotorNumber(); ++i)
         {
           jointPos[i] = (1 - r) * init_pos_[i] + r * targetPos[i];
         }
@@ -89,10 +90,10 @@ public:
   }
 
 private:
-  std::vector<float> kp{6, 0.0}, kd{6, 0.0}, targetPos{6, 0.0}, targetVel{6, 0.0}, targetTorque{6, 0.0}; // Gains and targets
-  std::vector<float> init_pos_{6, 0.0};                                                                   // Initial joint positions
-  bool is_first_enter_{true};                                                                              // Flag for first iteration
-  int running_iter_{1};                                                                                    // Iteration count
+  std::vector<float> kp, kd, targetPos, targetVel, targetTorque; // Gains and targets
+  std::vector<float> init_pos_;                                  // Initial joint positions
+  bool is_first_enter_{true};                                    // Flag for first iteration
+  int running_iter_{1};                                          // Iteration count
 };
 
 /**
