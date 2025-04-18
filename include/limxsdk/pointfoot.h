@@ -42,6 +42,13 @@ namespace limxsdk {
       uint32_t getMotorNumber() override;
 
       /**
+       * @brief Override to obtain names of all robot motors.
+       * Used for motor identification.
+       * @return Vector of motor names; empty if unavailable.
+       */
+      std::vector<std::string> getMotorNames() override;
+
+      /**
        * @brief Method to subscribe to updates of the robot's IMU (Inertial Measurement Unit) data.
        * @param cb The callback function to be invoked when new IMU data is received.
        */
